@@ -1,2 +1,22 @@
 [
+{
+    "model": "MainApp.snippet",
+    "pk": 1,
+    "fields": {
+        "name": "Отображение сообщения в консоле",
+        "lang": "py",
+        "code": "print('hello world')",
+        "creation_date": "2025-10-17T18:30:09.167Z"
+    }
+},
+{
+    "model": "MainApp.snippet",
+    "pk": 2,
+    "fields": {
+        "name": "Окно с сообщением",
+        "lang": "js",
+        "code": "alert('message')",
+        "creation_date": "2025-10-17T18:31:08.829Z"
+    }
+}
 ]

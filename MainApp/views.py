@@ -1,5 +1,5 @@
 from django.http import Http404, HttpResponse
-from django.shortcuts import render, redirect
+from django.shortcuts import render, redirect, get_object_or_404
 from MainApp.models import Snippet
 
 
@@ -19,6 +19,18 @@ def snippets_page(request):
 
 
 def snippet_item(request, id: int):
-    snippet = Snippet.objects.get(id=id)
+    snippet = get_object_or_404(Snippet, id=id)
     context = {'pagename': 'Сниппет', 'snippet': snippet}
     return render(request, 'pages/item_snippet.html', context)
+
+
+def delete_snippet(request, id: int):
+    snippet = get_object_or_404(Snippet, id=id)
+
+    # если метод POST, удаляю сниппет и перенаправляю на главную страницу
+    if request.method == 'POST':
+        snippet.delete()
+        return redirect('/')
+
+    # если метод GET, то просто возвращаю страницу
+    return render(request, 'pages/item_snippet.html')
