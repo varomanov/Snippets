@@ -1,22 +1,32 @@
 [
 {
     "model": "MainApp.snippet",
-    "pk": 1,
+    "pk": 8,
     "fields": {
-        "name": "Отображение сообщения в консоле",
-        "lang": "py",
-        "code": "print('hello world')",
-        "creation_date": "2025-10-17T18:30:09.167Z"
+        "name": "Окно с сообщением",
+        "lang": "Python",
+        "code": "print(\"Hello World!\")",
+        "creation_date": "2025-10-18T04:01:42.841Z"
     }
 },
 {
     "model": "MainApp.snippet",
-    "pk": 2,
+    "pk": 9,
     "fields": {
-        "name": "Окно с сообщением",
-        "lang": "js",
-        "code": "alert('message')",
-        "creation_date": "2025-10-17T18:31:08.829Z"
+        "name": "Alert",
+        "lang": "JavaScript",
+        "code": "console.log('Alert')",
+        "creation_date": "2025-10-18T04:02:35.825Z"
+    }
+},
+{
+    "model": "MainApp.snippet",
+    "pk": 10,
+    "fields": {
+        "name": "Alert",
+        "lang": "JavaScript",
+        "code": "console.log('Alert')",
+        "creation_date": "2025-10-18T04:03:19.357Z"
     }
 }
 ]

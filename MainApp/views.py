@@ -1,3 +1,4 @@
+import pprint
 from django.http import Http404, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
 from MainApp.models import Snippet
@@ -9,6 +10,13 @@ def index_page(request):
 
 
 def add_snippet_page(request):
+    if request.method == 'POST':
+        name = request.POST['name']
+        lang = request.POST['lang']
+        code = request.POST['code']
+        Snippet.objects.create(name=name, lang=lang, code=code).save()
+        return redirect('snippets-list')
+
     context = {'pagename': 'Добавление нового сниппета'}
     return render(request, 'pages/add_snippet.html', context)
 
@@ -20,17 +28,20 @@ def snippets_page(request):
 
 def snippet_item(request, id: int):
     snippet = get_object_or_404(Snippet, id=id)
-    context = {'pagename': 'Сниппет', 'snippet': snippet}
-    return render(request, 'pages/item_snippet.html', context)
 
-
-def delete_snippet(request, id: int):
-    snippet = get_object_or_404(Snippet, id=id)
-
-    # если метод POST, удаляю сниппет и перенаправляю на главную страницу
     if request.method == 'POST':
-        snippet.delete()
-        return redirect('/')
+        action = request.POST.get('action')
 
-    # если метод GET, то просто возвращаю страницу
-    return render(request, 'pages/item_snippet.html')
+        if action == 'delete':
+            snippet.delete()
+            return redirect('snippets-list')
+
+        elif action == 'update':
+            # Обновляем данные сниппета
+            snippet.name = request.POST.get('name')
+            snippet.code = request.POST.get('code')
+            snippet.save()
+            return redirect('snippet-item', id=id)  # Возвращаемся на эту же страницу
+
+    context = {'pagename': 'Редактирование сниппета', 'snippet': snippet}
+    return render(request, 'pages/item_snippet.html', context)
