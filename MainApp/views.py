@@ -1,7 +1,8 @@
 import pprint
 from django.http import Http404, HttpResponse
 from django.shortcuts import render, redirect, get_object_or_404
-from MainApp.models import Snippet
+from .forms import SnippetForm
+from .models import Snippet
 
 
 def index_page(request):
@@ -10,19 +11,22 @@ def index_page(request):
 
 
 def add_snippet_page(request):
-    if request.method == 'POST':
-        name = request.POST['name']
-        lang = request.POST['lang']
-        code = request.POST['code']
-        Snippet.objects.create(name=name, lang=lang, code=code).save()
-        return redirect('snippets-list')
-
-    context = {'pagename': 'Добавление нового сниппета'}
+    form = SnippetForm()
+    context = {
+        'pagename': 'Добавление нового сниппета',
+        'form': form,
+    }
     return render(request, 'pages/add_snippet.html', context)
 
 
+def create_snippet(request):
+    print(request.POST)
+    return HttpResponse('OK')
+
+
 def snippets_page(request):
-    context = {'pagename': 'Просмотр сниппетов', 'snippets': Snippet.objects.all()}
+    context = {'pagename': 'Просмотр сниппетов',
+               'snippets': Snippet.objects.all()}
     return render(request, 'pages/view_snippets.html', context)
 
 
@@ -42,7 +46,8 @@ def snippet_item(request, id: int):
             snippet.code = request.POST.get('code')
             snippet.save()
             snippet.refresh_from_db()
-            return redirect('snippet-item', id=id)  # Возвращаемся на эту же страницу
+            # Возвращаемся на эту же страницу
+            return redirect('snippet-item', id=id)
 
     context = {'pagename': 'Редактирование сниппета', 'snippet': snippet}
     return render(request, 'pages/item_snippet.html', context)
