@@ -41,6 +41,7 @@ def snippet_item(request, id: int):
             snippet.name = request.POST.get('name')
             snippet.code = request.POST.get('code')
             snippet.save()
+            snippet.refresh_from_db()
             return redirect('snippet-item', id=id)  # Возвращаемся на эту же страницу
 
     context = {'pagename': 'Редактирование сниппета', 'snippet': snippet}
