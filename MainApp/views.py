@@ -1,5 +1,5 @@
 import pprint
-from django.http import Http404, HttpResponse
+from django.http import Http404, HttpResponse, HttpResponseNotAllowed
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import SnippetForm
 from .models import Snippet
@@ -20,8 +20,14 @@ def add_snippet_page(request):
 
 
 def create_snippet(request):
-    print(request.POST)
-    return HttpResponse('OK')
+    if request.method == 'POST':
+        form = SnippetForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('snippets-list')
+        return render(request, 'pages/add_snippet.html', context={'form': form})
+
+    return HttpResponseNotAllowed(['POST'], 'Only POST methods')
 
 
 def snippets_page(request):
