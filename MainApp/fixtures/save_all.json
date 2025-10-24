@@ -6,7 +6,8 @@
         "name": "Пример №1",
         "lang": "py",
         "code": "print(\"hello world\")",
-        "creation_date": "2025-10-23T15:45:28.962Z"
+        "creation_date": "2025-10-23T15:45:28.962Z",
+        "user": null
     }
 },
 {
@@ -16,7 +17,8 @@
         "name": "Пример №2",
         "lang": "JS",
         "code": "x == 10;",
-        "creation_date": "2025-10-24T01:56:32.330Z"
+        "creation_date": "2025-10-24T01:56:32.330Z",
+        "user": null
     }
 },
 {
@@ -26,7 +28,8 @@
         "name": "Example #3",
         "lang": "PY",
         "code": "def x():\r\n  return x",
-        "creation_date": "2025-10-24T02:04:27.353Z"
+        "creation_date": "2025-10-24T02:04:27.353Z",
+        "user": null
     }
 },
 {
@@ -36,7 +39,8 @@
         "name": "Snippet HTML",
         "lang": "html",
         "code": "<h1>Hello</h1>",
-        "creation_date": "2025-10-24T02:30:49.353Z"
+        "creation_date": "2025-10-24T02:30:49.353Z",
+        "user": null
     }
 },
 {
@@ -46,7 +50,19 @@
         "name": "Snipper #N",
         "lang": "cpp",
         "code": "code",
-        "creation_date": "2025-10-24T03:01:50.900Z"
+        "creation_date": "2025-10-24T03:01:50.900Z",
+        "user": null
+    }
+},
+{
+    "model": "MainApp.snippet",
+    "pk": 6,
+    "fields": {
+        "name": "Admin Snippet",
+        "lang": "py",
+        "code": "print",
+        "creation_date": "2025-10-24T17:20:22.101Z",
+        "user": 1
     }
 }
 ]

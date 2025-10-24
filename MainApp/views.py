@@ -21,12 +21,17 @@ def add_snippet_page(request):
         }
         return render(request, 'pages/add_snippet.html', context)
 
-    if request.method == 'POST':
+    # Получаем данные из формыи и на их основе создаем новый сниппет, сохраняя его в БД
+    if request.method == "POST":
         form = SnippetForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('snippets-list')
-        return render(request, 'pages/add_snippet.html', context={'form': form})
+    if form.is_valid:
+        snippet = form.save(commit=False) # получаем экземпляр класса Snippet
+    if request.user.is_authenticated:
+        snippet.user = request.user
+        snippet.save()
+        #GET /snippets/list
+        return redirect("snippets-list") # URL для списка сниппитов
+    return render(request,"pages/add_snippet.html", context={"form": form})
 
 
 def snippets_page(request):
