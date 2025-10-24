@@ -3,6 +3,7 @@ from django.http import Http404, HttpResponse, HttpResponseNotAllowed
 from django.shortcuts import render, redirect, get_object_or_404
 from .forms import SnippetForm
 from .models import Snippet
+from django.contrib import auth
 
 
 def index_page(request):
@@ -55,3 +56,22 @@ def snippet_item(request, id: int):
 
     context = {'pagename': 'Редактирование сниппета', 'snippet': snippet}
     return render(request, 'pages/item_snippet.html', context)
+
+
+def login(request):
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = auth.authenticate(request, username=username, password=password)
+        if user is not None:
+            auth.login(request, user)
+            print(user)
+        else:
+            print(user)
+            pass
+    return redirect('home')
+
+
+def logout(request):
+    auth.logout(request)
+    return redirect('home')
