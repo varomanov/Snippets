@@ -11,23 +11,21 @@ def index_page(request):
 
 
 def add_snippet_page(request):
-    form = SnippetForm()
-    context = {
-        'pagename': 'Добавление нового сниппета',
-        'form': form,
-    }
-    return render(request, 'pages/add_snippet.html', context)
+    # при ГЕТ методе формируется путая форма
+    if request.method == 'GET':
+        form = SnippetForm()
+        context = {
+            'pagename': 'Добавление нового сниппета',
+            'form': form,
+        }
+        return render(request, 'pages/add_snippet.html', context)
 
-
-def create_snippet(request):
     if request.method == 'POST':
         form = SnippetForm(request.POST)
         if form.is_valid():
             form.save()
             return redirect('snippets-list')
         return render(request, 'pages/add_snippet.html', context={'form': form})
-
-    return HttpResponseNotAllowed(['POST'], 'Only POST methods')
 
 
 def snippets_page(request):
