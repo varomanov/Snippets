@@ -1,32 +1,52 @@
 [
 {
     "model": "MainApp.snippet",
-    "pk": 8,
+    "pk": 1,
     "fields": {
-        "name": "Окно с сообщением",
-        "lang": "Python",
-        "code": "print(\"Hello World!\")",
-        "creation_date": "2025-10-18T04:01:42.841Z"
+        "name": "Пример №1",
+        "lang": "py",
+        "code": "print(\"hello world\")",
+        "creation_date": "2025-10-23T15:45:28.962Z"
     }
 },
 {
     "model": "MainApp.snippet",
-    "pk": 9,
+    "pk": 2,
     "fields": {
-        "name": "Alert",
-        "lang": "JavaScript",
-        "code": "console.log('Alert')",
-        "creation_date": "2025-10-18T04:02:35.825Z"
+        "name": "Пример №2",
+        "lang": "JS",
+        "code": "x == 10;",
+        "creation_date": "2025-10-24T01:56:32.330Z"
     }
 },
 {
     "model": "MainApp.snippet",
-    "pk": 10,
+    "pk": 3,
     "fields": {
-        "name": "Alert",
-        "lang": "JavaScript",
-        "code": "console.log('Alert')",
-        "creation_date": "2025-10-18T04:03:19.357Z"
+        "name": "Example #3",
+        "lang": "PY",
+        "code": "def x():\r\n  return x",
+        "creation_date": "2025-10-24T02:04:27.353Z"
+    }
+},
+{
+    "model": "MainApp.snippet",
+    "pk": 4,
+    "fields": {
+        "name": "Snippet HTML",
+        "lang": "html",
+        "code": "<h1>Hello</h1>",
+        "creation_date": "2025-10-24T02:30:49.353Z"
+    }
+},
+{
+    "model": "MainApp.snippet",
+    "pk": 5,
+    "fields": {
+        "name": "Snipper #N",
+        "lang": "cpp",
+        "code": "code",
+        "creation_date": "2025-10-24T03:01:50.900Z"
     }
 }
 ]
