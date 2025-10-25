@@ -4,14 +4,16 @@ from django.shortcuts import render, redirect, get_object_or_404
 from .forms import SnippetForm
 from .models import Snippet
 from django.contrib import auth
+from django.db.models import Q
 
 
 def index_page(request):
     if request.user.is_authenticated:
         snippets = Snippet.objects.filter(user=request.user)
-        context = {"pagename": "PythonBin", 'snippets': snippets}
+        context = {"pagename": "PythonBin", "snippets": snippets}
         return render(request, "pages/index.html", context)
-    return render(request, 'pages/index.html')
+    return render(request, "pages/index.html")
+
 
 def add_snippet_page(request):
     # при ГЕТ методе формируется путая форма
@@ -36,8 +38,16 @@ def add_snippet_page(request):
     return render(request, "pages/add_snippet.html", context={"form": form})
 
 
+def snippets_auth(request):
+    context = {"pagename": "Просмотр сниппетов"}
+    snippets = Snippet.objects.filter(user=request.user)
+    context["snippets"] = snippets
+    return render(request, "pages/view_snippets_auth.html", context)
+
+
 def snippets_page(request):
-    context = {"pagename": "Просмотр сниппетов", "snippets": Snippet.objects.all()}
+    context = {"pagename": "Просмотр сниппетов"}
+    context["snippets"] = Snippet.objects.filter(Q(is_private=0) | Q(user=request.user))
     return render(request, "pages/view_snippets.html", context)
 
 

@@ -3,66 +3,36 @@
     "model": "MainApp.snippet",
     "pk": 1,
     "fields": {
-        "name": "Пример №1",
+        "name": "Sample #1",
         "lang": "py",
-        "code": "print(\"hello world\")",
-        "creation_date": "2025-10-23T15:45:28.962Z",
-        "user": null
+        "code": "print(\"Hello\")",
+        "creation_date": "2025-10-25T13:35:02.753Z",
+        "user": 1,
+        "is_private": true
     }
 },
 {
     "model": "MainApp.snippet",
     "pk": 2,
     "fields": {
-        "name": "Пример №2",
-        "lang": "JS",
-        "code": "x == 10;",
-        "creation_date": "2025-10-24T01:56:32.330Z",
-        "user": null
+        "name": "Sample #2",
+        "lang": "js",
+        "code": "console.log(\"Value\")",
+        "creation_date": "2025-10-25T13:44:45.967Z",
+        "user": 3,
+        "is_private": true
     }
 },
 {
     "model": "MainApp.snippet",
     "pk": 3,
     "fields": {
-        "name": "Example #3",
-        "lang": "PY",
-        "code": "def x():\r\n  return x",
-        "creation_date": "2025-10-24T02:04:27.353Z",
-        "user": null
-    }
-},
-{
-    "model": "MainApp.snippet",
-    "pk": 4,
-    "fields": {
-        "name": "Snippet HTML",
+        "name": "Public Fooboo Snippet",
         "lang": "html",
-        "code": "<h1>Hello</h1>",
-        "creation_date": "2025-10-24T02:30:49.353Z",
-        "user": null
-    }
-},
-{
-    "model": "MainApp.snippet",
-    "pk": 5,
-    "fields": {
-        "name": "Snipper #N",
-        "lang": "cpp",
-        "code": "code",
-        "creation_date": "2025-10-24T03:01:50.900Z",
-        "user": null
-    }
-},
-{
-    "model": "MainApp.snippet",
-    "pk": 6,
-    "fields": {
-        "name": "Admin Snippet",
-        "lang": "py",
-        "code": "print",
-        "creation_date": "2025-10-24T17:20:22.101Z",
-        "user": 1
+        "code": "<p></p>",
+        "creation_date": "2025-10-25T13:47:22.766Z",
+        "user": 3,
+        "is_private": false
     }
 }
 ]
