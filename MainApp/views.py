@@ -47,7 +47,10 @@ def snippets_auth(request):
 
 def snippets_page(request):
     context = {"pagename": "Просмотр сниппетов"}
-    context["snippets"] = Snippet.objects.filter(Q(is_private=0) | Q(user=request.user))
+    if request.user.is_authenticated:
+        context["snippets"] = Snippet.objects.filter(Q(is_private=0) | Q(user=request.user))
+    else:
+        context["snippets"] = Snippet.objects.filter(is_private=0)
     return render(request, "pages/view_snippets.html", context)
 
 
