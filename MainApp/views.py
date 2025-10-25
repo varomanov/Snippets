@@ -7,66 +7,67 @@ from django.contrib import auth
 
 
 def index_page(request):
-    context = {'pagename': 'PythonBin'}
-    return render(request, 'pages/index.html', context)
-
+    if request.user.is_authenticated:
+        snippets = Snippet.objects.filter(user=request.user)
+        context = {"pagename": "PythonBin", 'snippets': snippets}
+        return render(request, "pages/index.html", context)
+    return render(request, 'pages/index.html')
 
 def add_snippet_page(request):
     # при ГЕТ методе формируется путая форма
-    if request.method == 'GET':
+    if request.method == "GET":
         form = SnippetForm()
         context = {
-            'pagename': 'Добавление нового сниппета',
-            'form': form,
+            "pagename": "Добавление нового сниппета",
+            "form": form,
         }
-        return render(request, 'pages/add_snippet.html', context)
+        return render(request, "pages/add_snippet.html", context)
 
     # Получаем данные из формыи и на их основе создаем новый сниппет, сохраняя его в БД
     if request.method == "POST":
         form = SnippetForm(request.POST)
     if form.is_valid:
-        snippet = form.save(commit=False) # получаем экземпляр класса Snippet
+        snippet = form.save(commit=False)  # получаем экземпляр класса Snippet
     if request.user.is_authenticated:
         snippet.user = request.user
         snippet.save()
-        #GET /snippets/list
-        return redirect("snippets-list") # URL для списка сниппитов
-    return render(request,"pages/add_snippet.html", context={"form": form})
+        # GET /snippets/list
+        return redirect("snippets-list")  # URL для списка сниппитов
+    return render(request, "pages/add_snippet.html", context={"form": form})
 
 
 def snippets_page(request):
-    context = {'pagename': 'Просмотр сниппетов',
-               'snippets': Snippet.objects.all()}
-    return render(request, 'pages/view_snippets.html', context)
+    context = {"pagename": "Просмотр сниппетов", "snippets": Snippet.objects.all()}
+    return render(request, "pages/view_snippets.html", context)
 
 
 def snippet_item(request, id: int):
     snippet = get_object_or_404(Snippet, id=id)
 
-    if request.method == 'POST':
-        action = request.POST.get('action')
+    if request.method == "POST":
+        action = request.POST.get("action")
 
-        if action == 'delete':
+        if action == "delete":
             snippet.delete()
-            return redirect('snippets-list')
+            return redirect("snippets-list")
 
-        elif action == 'update':
+        elif action == "update":
             # Обновляем данные сниппета
-            snippet.name = request.POST.get('name')
-            snippet.code = request.POST.get('code')
+            snippet.name = request.POST.get("name")
+            snippet.code = request.POST.get("code")
             snippet.save()
             snippet.refresh_from_db()
             # Возвращаемся на эту же страницу
-            return redirect('snippet-item', id=id)
+            return redirect("snippet-item", id=id)
 
-    context = {'pagename': 'Редактирование сниппета', 'snippet': snippet}
-    return render(request, 'pages/item_snippet.html', context)
+    context = {"pagename": "Редактирование сниппета", "snippet": snippet}
+    return render(request, "pages/item_snippet.html", context)
 
 
 def login(request):
-    if request.method == 'POST':
-        username = request.POST.get('username')
-        password = request.POST.get('password')
+    if request.method == "POST":
+        username = request.POST.get("username")
+        password = request.POST.get("password")
         user = auth.authenticate(request, username=username, password=password)
         if user is not None:
             auth.login(request, user)
@@ -74,9 +75,9 @@ def login(request):
         else:
             print(user)
             pass
-    return redirect('home')
+    return redirect("home")
 
 
 def logout(request):
     auth.logout(request)
-    return redirect('home')
+    return redirect("home")

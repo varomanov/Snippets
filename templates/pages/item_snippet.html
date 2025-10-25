@@ -19,13 +19,17 @@
         <div class="row">
           <div class="col">
             <div class="row">
-              <div class="col col-8">
+              <div class="col col-6">
                 <label>Название:</label>
                 <input type="text" name="name" value="{{ snippet.name }}" class="form-control" />
               </div>
-              <div class="col col-4">
+              <div class="col col-3">
                 <label>Дата создания:</label>
                 <input type="text" value="{{ snippet.creation_date }}" class="form-control" disabled />
+              </div>
+              <div class="col col-3">
+                <label>Статус:</label>
+                <input type="" value="{% if snippet.is_private %}Приватный{% else %}Публичный{% endif %}" class="form-control" disabled />
               </div>
             </div>
             <hr />
@@ -43,7 +47,8 @@
           <div class="col">
             <button type="submit" name="action" value="update" class="btn btn-primary">
               <i class="bi bi-floppy me-2"></i>
-              Сохранить изменения</button>
+              Сохранить изменения
+            </button>
             <button type="submit" name="action" value="delete" class="btn btn-danger">Удалить</button>
             <a href="{% url 'snippets-list' %}" class="btn btn-secondary">Отмена</a>
           </div>
