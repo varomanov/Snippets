@@ -48,7 +48,9 @@ def snippets_auth(request):
 def snippets_page(request):
     context = {"pagename": "Просмотр сниппетов"}
     if request.user.is_authenticated:
-        context["snippets"] = Snippet.objects.filter(Q(is_private=0) | Q(user=request.user))
+        context["snippets"] = Snippet.objects.filter(
+            Q(is_private=0) | Q(user=request.user)
+        )
     else:
         context["snippets"] = Snippet.objects.filter(is_private=0)
     return render(request, "pages/view_snippets.html", context)
@@ -79,18 +81,37 @@ def snippet_item(request, id: int):
 
 def login(request):
     if request.method == "POST":
+        pprint.pprint(request.POST)
         username = request.POST.get("username")
         password = request.POST.get("password")
         user = auth.authenticate(request, username=username, password=password)
         if user is not None:
             auth.login(request, user)
-            print(user)
         else:
-            print(user)
-            pass
+            context = {
+                "pagename": "PythonBin",
+                "errors": ["Wrong username or password"],
+            }
+            return render(request, "pages/index.html", context)
     return redirect("home")
 
 
 def logout(request):
     auth.logout(request)
     return redirect("home")
+
+
+def snippet_edit(request, snippet_id):
+    context = {"pagename": "Обновление сниппета"}
+    snippet = get_object_or_404(Snippet, id=snippet_id)
+    if request.method == "GET":
+        form = SnippetForm(instance=Snippet)
+        return render(request, "pages/add_snippet.html", context | {"form": form})
+
+    # Получаем данные из формы и на их основе обновляем сниппет, сохраняя его в БД
+    if request.method == "POST":
+        data_form = request.POST
+        snippet.name = data_form["name"]
+        snippet.code = data_form["code"]
+        snippet.save()
+        return redirect("snippets-list")  # URL для списка сниппитов
