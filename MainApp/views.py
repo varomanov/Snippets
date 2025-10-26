@@ -1,10 +1,24 @@
 import pprint
 from django.http import Http404, HttpResponse, HttpResponseNotAllowed
 from django.shortcuts import render, redirect, get_object_or_404
-from .forms import SnippetForm
+from .forms import SnippetForm, UserRegistrationForm
 from .models import Snippet
 from django.contrib import auth
 from django.db.models import Q
+from django.contrib.auth.decorators import login_required
+
+
+def register(request):
+    context = {"pagename": "Добавление нового пользователя"}
+    if request.method == "GET":
+        form = UserRegistrationForm()
+    if request.method == "POST":
+        form = UserRegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect("home")
+    context["form"] = form
+    return render(request, "pages/registration.html", context)
 
 
 def index_page(request):
@@ -38,6 +52,7 @@ def add_snippet_page(request):
     return render(request, "pages/add_snippet.html", context={"form": form})
 
 
+@login_required
 def snippets_auth(request):
     context = {"pagename": "Просмотр сниппетов"}
     snippets = Snippet.objects.filter(user=request.user)
